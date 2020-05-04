@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace price.infra
+namespace Price.Infra
 {
     public class Class1
     {
