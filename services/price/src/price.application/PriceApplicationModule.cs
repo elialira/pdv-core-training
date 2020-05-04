@@ -1,16 +1,25 @@
 ﻿using System;
+using System.Reflection;
 using EventFlow;
 using EventFlow.Configuration;
 using EventFlow.Extensions;
+using Price.Application.Interfaces;
+using Price.Application.Services;
 
-namespace price.application
+namespace Price.Application
 {
   public class PriceApplicationModule : IModule
   {
+    public static Assembly Assembly { get; } = typeof(PriceApplicationModule).Assembly;
+
     public void Register(IEventFlowOptions eventFlowOptions)
     {
         eventFlowOptions
-            .AddDefaults(typeof(PriceApplicationModule).Assembly);
+            .AddDefaults(Assembly)
+            .RegisterServices(sr =>
+              {
+                sr.Register<IPriceTableService, PriceTableService>();
+              });;
     }
   }
 }
