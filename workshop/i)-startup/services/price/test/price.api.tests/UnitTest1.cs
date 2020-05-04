@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace price.api.tests
+namespace Price.Api.tests
 {
     public class UnitTest1
     {

@@ -4,7 +4,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace price.api.swagger
+namespace Price.Api.swagger
 {
     public static class SwaggerServicesConfiguration
     {

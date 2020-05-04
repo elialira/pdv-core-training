@@ -1,6 +1,6 @@
 using System;
 
-namespace price.api
+namespace Price.Api
 {
     public class WeatherForecast
     {

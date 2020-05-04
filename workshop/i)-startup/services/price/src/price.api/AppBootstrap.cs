@@ -4,9 +4,9 @@ using EventFlow.AspNetCore.Extensions;
 using EventFlow.DependencyInjection.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using price.api.swagger;
+using Price.Api.swagger;
 
-namespace price.api
+namespace Price.Api
 {
     public class AppBootstrap
     {

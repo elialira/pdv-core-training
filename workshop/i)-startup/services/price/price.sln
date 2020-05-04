@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F5579DDE-76C7-45EB-B847-539870D0C603}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "price.api", "src\price.api\price.api.csproj", "{D926EFA6-66C0-4D48-9CA7-02966025737D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Price.Api", "src\Price.Api\Price.Api.csproj", "{D926EFA6-66C0-4D48-9CA7-02966025737D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{25F6076D-CA6F-4F45-88AC-1EEB25E49DA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "price.api.tests", "test\price.api.tests\price.api.tests.csproj", "{72E1A77D-EF48-4B18-BF56-8770ABBE744B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Price.Api.tests", "test\Price.Api.tests\Price.Api.tests.csproj", "{72E1A77D-EF48-4B18-BF56-8770ABBE744B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
