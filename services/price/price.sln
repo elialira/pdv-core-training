@@ -5,17 +5,17 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1901744D-25EF-4B12-9C7C-ACC078A5540C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "price.api", "src\price.api\price.api.csproj", "{B9B32024-4C03-430C-9DF5-B1ED1C1F36CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Price.Api", "src\Price.Api\Price.Api.csproj", "{B9B32024-4C03-430C-9DF5-B1ED1C1F36CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "price.application", "src\price.application\price.application.csproj", "{5924E284-1314-4F92-A61F-736D151989C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Price.Application", "src\Price.Application\Price.Application.csproj", "{5924E284-1314-4F92-A61F-736D151989C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "price.domain", "src\price.domain\price.domain.csproj", "{5531CB7A-AFBB-4429-997C-5F4C8E3ADF8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Price.Domain", "src\Price.Domain\Price.Domain.csproj", "{5531CB7A-AFBB-4429-997C-5F4C8E3ADF8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "price.infra", "src\price.infra\price.infra.csproj", "{D736816F-9480-4933-B640-53352D8966B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Price.Infra", "src\Price.Infra\Price.Infra.csproj", "{D736816F-9480-4933-B640-53352D8966B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5ADDF9AA-04AE-4343-BA95-872E92E7A7AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "price.api.tests", "test\price.api.tests\price.api.tests.csproj", "{DF7E27B5-8F38-4719-9F52-EF37E172B63F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Price.Api.tests", "test\Price.Api.tests\Price.Api.tests.csproj", "{DF7E27B5-8F38-4719-9F52-EF37E172B63F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
