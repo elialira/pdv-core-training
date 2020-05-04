@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\price.domain\price.domain.csproj" />
-    <ProjectReference Include="..\price.application\price.application.csproj" />
+    <ProjectReference Include="..\Price.Domain\Price.Domain.csproj" />
+    <ProjectReference Include="..\Price.Application\Price.Application.csproj" />
   </ItemGroup>
 
 </Project>

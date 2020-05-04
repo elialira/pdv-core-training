@@ -4,11 +4,13 @@ using EventFlow.AspNetCore.Extensions;
 using EventFlow.DependencyInjection.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using price.api.swagger;
+using Price.Api.swagger;
+using Price.Application;
+using Price.Domain;
 
-namespace price.api
+namespace Price.Api
 {
-    public class AppBootstrap
+    public class ApiBootstrap
     {
         public static void AddServices(IServiceCollection services, IConfiguration configuration)
         {

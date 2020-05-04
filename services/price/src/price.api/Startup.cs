@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 
-namespace price.api
+namespace Price.Api
 {
     public class Startup
     {
@@ -24,7 +24,7 @@ namespace price.api
         {
             services.AddControllers();
             services.AddCors();            
-            AppBootstrap.AddServices(services, Configuration);
+            ApiBootstrap.AddServices(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
