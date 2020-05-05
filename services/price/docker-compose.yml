@@ -1,13 +1,6 @@
 version: '3.6'
-
-networks:
-  price-service-network:
-    driver: bridge
- 
 services:
-  
   price-service:
-    image: price-service:${TAG:-latest}
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,24 +18,20 @@ services:
 
   rabbitmq:
     image: "rabbitmq:3-management"
-    container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: "test"
       RABBITMQ_DEFAULT_PASS: "test"
-    networks: 
-      - price-service-network  
     ports:
       - "15672:15672"
       - "5672:5672"
-    labels:
-      NAME: "rabbitmq"
+    networks: 
+      - price-service-network
       
   eventstore:
     image: eventstore/eventstore:release-5.0.1
-    container_name: eventstore
     ports:
-      - 2113:2113
-      - 1113:1113
+      - "2113:2113"
+      - "1113:1113"
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:2113/stats || exit 1"]
@@ -56,7 +45,6 @@ services:
             
   readstore:
     image: postgres:10.6-alpine
-    container_name: readstore
     environment:
       - POSTGRES_DB=testdb
       - POSTGRES_USER=dbadmin
@@ -68,3 +56,6 @@ services:
       - price-service-network  
     ports:
       - "5433:5432"
+
+networks:
+  price-service-network:
