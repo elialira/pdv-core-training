@@ -1,18 +1,39 @@
-version: '3'
+version: '3.6'
 
+networks:
+  price-service-network:
+    driver: bridge
+ 
 services:
   
+  price-service:
+    image: price-service:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - rabbitmq
+      - eventstore
+      - readstore
+    networks: 
+      - price-service-network
+    ports:
+      - "5000:80"
+      - "5001:443"
+
   rabbitmq:
     image: "rabbitmq:3-management"
     container_name: rabbitmq
     environment:
-      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
       RABBITMQ_DEFAULT_USER: "test"
       RABBITMQ_DEFAULT_PASS: "test"
-      RABBITMQ_DEFAULT_VHOST: "/"
+    networks: 
+      - price-service-network  
     ports:
-    - "15672:15672"
-    - "5672:5672"
+      - "15672:15672"
+      - "5672:5672"
     labels:
       NAME: "rabbitmq"
       
@@ -30,6 +51,8 @@ services:
     environment:
       - EVENTSTORE_RUN_PROJECTIONS=all
       - EVENTSTORE_START_STANDARD_PROJECTIONS=TRUE
+    networks: 
+      - price-service-network
             
   readstore:
     image: postgres:10.6-alpine
@@ -41,6 +64,7 @@ services:
     command:
       - -c
       - max_prepared_transactions=100
+    networks: 
+      - price-service-network  
     ports:
       - "5433:5432"
-
