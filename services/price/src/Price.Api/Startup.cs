@@ -15,9 +15,9 @@ namespace Price.Api
             var builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true);
-            
-            builder.AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true)
+                .AddEnvironmentVariables();
+                            
             Configuration = builder.Build();
         }
 
