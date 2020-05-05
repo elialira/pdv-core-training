@@ -1,20 +1,20 @@
 using System.Threading;
 using System.Threading.Tasks;
+using EventFlow.Aggregates.ExecutionResults;
 using EventFlow.Commands;
 
 namespace Price.Domain.PriceTable.Commands
 {
   public class CreatePriceTableCommandHandler
-    : CommandHandler<PriceTable, PriceTableId, CreatePriceTableCommand>
+    : CommandHandler<PriceTable, PriceTableId, IExecutionResult, CreatePriceTableCommand>
   {
-    public override Task ExecuteAsync(
+    public override Task<IExecutionResult> ExecuteCommandAsync(
       PriceTable aggregate,
       CreatePriceTableCommand command,
       CancellationToken cancellationToken)
     {      
-      aggregate.Create(command.Name);
-      
-      return Task.CompletedTask;
+      var executionResult = aggregate.Create(command.Name, command.ProductPrices);
+      return Task.FromResult(executionResult);
     }
   }
 }

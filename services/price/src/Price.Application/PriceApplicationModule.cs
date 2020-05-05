@@ -5,6 +5,7 @@ using EventFlow.Configuration;
 using EventFlow.Extensions;
 using Price.Application.Interfaces;
 using Price.Application.Services;
+using Price.Domain;
 
 namespace Price.Application
 {
@@ -19,7 +20,7 @@ namespace Price.Application
             .RegisterServices(sr =>
               {
                 sr.Register<IPriceTableService, PriceTableService>();
-              });;
+              });
     }
   }
 }

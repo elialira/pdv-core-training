@@ -30,12 +30,7 @@ services:
     environment:
       - EVENTSTORE_RUN_PROJECTIONS=all
       - EVENTSTORE_START_STANDARD_PROJECTIONS=TRUE
-      
-  snapshot_store:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-      
+            
   readstore:
     image: postgres:10.6-alpine
     container_name: readstore

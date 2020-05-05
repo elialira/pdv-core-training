@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EventFlow;
 using Price.Application.Interfaces;
 using Price.Domain.PriceTable;
 using Price.Domain.PriceTable.Commands;
+using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Application.Services
 {
@@ -16,13 +18,15 @@ namespace Price.Application.Services
     
     public async Task<PriceTableId> Create(CancellationToken cancellationToken)
     {
-      var priceTableId = PriceTableId.New;
+      var id = PriceTableId.New;
       
-      await _commandBus.PublishAsync(
-        new CreatePriceTableCommand(priceTableId, "Tabela 1"), 
-        cancellationToken);
+      await _commandBus
+        .PublishAsync(
+          new CreatePriceTableCommand(id, "Tabela 1", new List<ProductPrice>()), 
+          cancellationToken)
+        .ConfigureAwait(false);
 
-      return priceTableId;
+      return id;
     }
   }
 }

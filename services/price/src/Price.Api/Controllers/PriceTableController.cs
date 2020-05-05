@@ -7,7 +7,7 @@ using Price.Application.Interfaces;
 namespace Price.Api.Controllers
 {
 	[ApiController]
-	[Route("api/[controller]")]
+	[Route("api/price-table")]
   public class PriceTableController : ControllerBase
   {
 		private readonly IPriceTableService _priceTableService;

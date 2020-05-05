@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using EventFlow.Aggregates;
 using Price.Domain.PriceTable.Events;
+using Price.Domain.PriceTable.Snapshots;
 using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Domain.PriceTable
@@ -12,10 +15,24 @@ namespace Price.Domain.PriceTable
     private string _name;
     public string Name { get => _name; }
 
-    private readonly List<ProductPrice> _productPrices;
-    public IReadOnlyList<ProductPrice> Prices => _productPrices.AsReadOnly();
+    private List<ProductPrice> _productPrices;
+    public IReadOnlyList<ProductPrice> ProductPrices => _productPrices.AsReadOnly();
 
-    public PriceTableState() => _productPrices = new List<ProductPrice>();
+    public IReadOnlyCollection<PriceTableSnapshotVersion> SnapshotVersions 
+      { get; private set; } = new PriceTableSnapshotVersion[] { };
+
+    public PriceTableState() 
+    {
+      _name = String.Empty;
+      _productPrices = new List<ProductPrice>();      
+    }
+
+    public void LoadSnapshot(PriceTableSnapshot snapshot)
+    {
+        _name = snapshot.Name;
+        _productPrices = snapshot.ProductPrices.ToList();
+        SnapshotVersions = snapshot.PreviousVersions;
+    }
 
     public void Apply(PriceTableCreatedEvent aggregateEvent)
     {
