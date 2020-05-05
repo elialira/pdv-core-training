@@ -15,7 +15,6 @@ namespace Price.Infra
         eventFlowOptions
             .AddDefaults(Assembly)
             .ConfigureEventStore()
-            //.ConfigureMongoDb()
             .ConfigureRabbitMqExtension();
     }
   }
