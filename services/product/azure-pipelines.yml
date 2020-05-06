@@ -1,3 +1,8 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
 trigger:
   batch: true
   branches:
@@ -6,16 +11,11 @@ trigger:
   paths:
     include:
       - services/product
-    exclude:
-      - services/price
-      - services/catalog
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: Sonar
-  - group: Product Command
   - name: 'imageRepository'
     value: 'product-command'
   - name: 'containerRegistry'
@@ -34,26 +34,6 @@ variables:
     value: '$(Build.BuildId)'
 
 stages:
-  - stage: Replace_Tokens
-    displayName: Replace Tokens
-    jobs:
-      - job: Replace_Tokens
-        displayName: Replace Tokens
-        steps:
-          - task: replacetokens@3
-            inputs:
-              targetFiles: 'infrastructure/kubernetes/product-command/*.yml'
-              encoding: 'auto'
-              writeBOM: true
-              actionOnMissing: 'warn'
-              keepToken: false
-              tokenPrefix: '#{'
-              tokenSuffix: '}#'
-          - task: PublishPipelineArtifact@1
-            displayName: Publish manifests
-            inputs:
-              artifactName: 'manifests'
-              path: '$(Build.SourcesDirectory)/infrastructure/kubernetes/product-command'
   - stage: Command_Build
     displayName: Command
     jobs:
@@ -66,10 +46,9 @@ stages:
             displayName: Build
             inputs:
               command: build
-              containerRegistry: $(containerRegistry)
               dockerfile: $(dockerfilePath)
               arguments: --build-arg MODULE=command
-                         --target build
+                --target build
           - script: |
               docker image build -f $(dockerfilePath) --build-arg MODULE=command --build-arg SKIPTESTS=false --target test -t $(imageRepository)-unit-test:$(tag) $(projectPath)
               docker container run --name $(imageRepository)-unit-test -d $(imageRepository)-unit-test:$(tag)
@@ -90,17 +69,6 @@ stages:
               summaryFileLocation: $(Agent.TempDirectory)/**/target/site/jacoco/jacoco.xml
               reportDirectory: $(Agent.TempDirectory)/**/target/site/jacoco/
           - task: Docker@2
-            displayName: Sonar
-            inputs:
-              command: build
-              dockerfile: $(dockerfilePath)
-              arguments: --build-arg MODULE=command
-                         --build-arg SKIPTESTS=false
-                         --build-arg SONAR_ENABLED=false
-                         --build-arg SONAR_URL=$(SONAR_URL)
-                         --build-arg SONAR_USERNAME=$(SONAR_USERNAME)
-                         --target sonar
-          - task: Docker@2
             displayName: Package
             inputs:
               command: build
@@ -108,13 +76,6 @@ stages:
               repository: $(imageRepository)
               containerRegistry: $(containerRegistry)
               arguments: --build-arg MODULE=command
-              tags: $(tag)
-          - task: Docker@2
-            displayName: Publish
-            inputs:
-              command: push
-              containerRegistry: $(containerRegistry)
-              repository: $(imageRepository)
               tags: $(tag)
   - stage: Command_Database_Build
     displayName: Command Database
@@ -133,36 +94,4 @@ stages:
               containerRegistry: $(containerRegistry)
               repository: $(imageRepository)-db
               arguments: --build-arg MODULE=command-db
-              tags: $(tag)
-          - task: Docker@2
-            displayName: Publish
-            inputs:
-              command: push
-              containerRegistry: $(containerRegistry)
-              repository: $(imageRepository)-db
-              tags: $(tag)
-  - stage: Command_Test_Build
-    displayName: Command Test
-    dependsOn: Command_Build
-    jobs:
-      - job: Command_Test_Build
-        displayName: Command Test Build
-        pool:
-          vmImage: $(vmImageName)
-        steps:
-          - task: Docker@2
-            displayName: Build
-            inputs:
-              command: build
-              dockerfile: $(dockerfilePath)
-              containerRegistry: $(containerRegistry)
-              repository: $(imageRepository)-test
-              arguments: --build-arg MODULE=command-test
-              tags: $(tag)
-          - task: Docker@2
-            displayName: Publish
-            inputs:
-              command: push
-              containerRegistry: $(containerRegistry)
-              repository: $(imageRepository)-test
               tags: $(tag)
