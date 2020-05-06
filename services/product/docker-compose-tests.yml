@@ -1,0 +1,49 @@
+version: '3'
+services:
+  command-test:
+    build:
+      context: .
+      args:
+        - MODULE=command-test
+    environment:
+      - DATABASE_URL=jdbc:postgresql://command-db:5432/productdb?currentSchema=product
+      - DATABASE_USERNAME=productadmin
+      - DATABASE_PASSWORD=admin#3012
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - SERVICE_PROTOCOL=http
+      - SERVICE_HOST=command
+      - SERVICE_PORT=8080
+    volumes:
+      - maven-repo:/root/.m2
+    networks:
+      - product-network
+
+  query-test:
+    build:
+      context: .
+      args:
+        - MODULE=query-test
+    environment:
+      - DATABASE_URL=jdbc:postgresql://query-db:5432/productdb?currentSchema=product
+      - DATABASE_USERNAME=productadmin
+      - DATABASE_PASSWORD=admin#3012
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - SERVICE_PROTOCOL=http
+      - SERVICE_HOST=command
+      - SERVICE_PORT=8090
+    volumes:
+      - maven-repo:/root/.m2
+    networks:
+      - product-network
+
+networks:
+  product-network:
+
+volumes:
+    maven-repo:

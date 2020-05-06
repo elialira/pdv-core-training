@@ -1,0 +1,103 @@
+version: '3'
+services:
+  command-db:
+    build: product-command-db/
+    ports:
+      - "5432:5432"
+    networks:
+      - product-network
+  command-update-db:
+    build:
+      context: .
+      args:
+        - MODULE=command-db
+    environment:
+      - DATABASE_URL=jdbc:postgresql://command-db:5432/productdb?currentSchema=product
+      - DATABASE_USERNAME=productadmin
+      - DATABASE_PASSWORD=admin#3012
+    volumes:
+      - maven-repo:/root/.m2
+    networks:
+      - product-network
+    depends_on:
+      - command-db
+  command:
+    build:
+      context: .
+      args:
+        - MODULE=command
+        - SKIPTESTS=false
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://command-db:5432/productdb?currentSchema=product
+      - DATABASE_USERNAME=productadmin
+      - DATABASE_PASSWORD=admin#3012
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+    volumes:
+      - maven-repo:/root/.m2
+    networks:
+      - product-network
+    depends_on:
+      - rabbitmq
+      - command-update-db
+  query-db:
+    build: product-query-db/
+    ports:
+      - "5433:5432"
+    networks:
+      - product-network
+  query-update-db:
+    build:
+      context: .
+      args:
+        - MODULE=query-db
+    environment:
+      - DATABASE_URL=jdbc:postgresql://query-db:5432/productdb?currentSchema=product
+      - DATABASE_USERNAME=productadmin
+      - DATABASE_PASSWORD=admin#3012
+    volumes:
+      - maven-repo:/root/.m2
+    networks:
+      - product-network
+    depends_on:
+      - query-db
+  query:
+    build:
+      context: .
+      args:
+        - MODULE=query
+    ports:
+      - "8090:8090"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://query-db:5432/productdb?currentSchema=product
+      - DATABASE_USERNAME=productadmin
+      - DATABASE_PASSWORD=admin#3012
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+    volumes:
+      - maven-repo:/root/.m2
+    networks:
+      - product-network
+    depends_on:
+      - rabbitmq
+      - query-db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - product-network
+
+networks:
+  product-network:
+
+volumes:
+    maven-repo:

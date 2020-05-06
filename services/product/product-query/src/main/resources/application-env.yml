@@ -1,0 +1,59 @@
+server:
+  port: 8090
+## default connection pool
+spring:
+  jpa:
+    properties:
+      hibernate:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    generate-ddl: true
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 2000
+          max-attempts: 2
+          multiplier: 1.5
+          max-interval: 5000
+
+amqp:
+  queue: product.query.events
+  dlx:
+    queue: product.query.events.dlx
+
+axon:
+  serializer:
+    general: jackson
+  eventhandling:
+      processors:
+        amqpEvents:
+          source: inputMessageSource
+          mode: subscribing
+
+security:
+  access:
+    api:
+      permissions-uri: ${RAC_PROTOCOL}://${RAC_HOST}:${RAC_PORT}/totvs.rac/api/permissions
+  oauth2:
+    resource:
+      id: 'authorization_api'
+      jwk:
+        key-set-uri: ${RAC_PROTOCOL}://${RAC_HOST}:${RAC_PORT}/totvs.rac/.well-known/openid-configuration/jwks

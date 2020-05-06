@@ -1,0 +1,11 @@
+CREATE SCHEMA product;
+
+CREATE USER productadmin WITH PASSWORD 'admin#3012';
+GRANT CONNECT ON DATABASE productdb TO productadmin;
+GRANT CREATE, USAGE ON SCHEMA product TO productadmin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA product TO productadmin;
+
+CREATE USER productuser WITH PASSWORD 'user#3012';
+GRANT CONNECT ON DATABASE productdb TO productuser;
+GRANT USAGE ON SCHEMA product TO productuser;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA product TO productuser;
