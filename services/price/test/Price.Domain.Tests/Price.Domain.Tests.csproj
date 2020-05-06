@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Price.Domain\Price.Domain.csproj" />
+    <ProjectReference Include="..\Price.Test.Common\Price.Test.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,9 @@ using EventFlow.Aggregates;
 using EventFlow.Configuration;
 using EventFlow.Core;
 using EventFlow.DependencyInjection.Extensions;
+using EventFlow.Snapshots;
 using Microsoft.Extensions.DependencyInjection;
+using Price.Test.Common;
 
 namespace Price.Domain.Tests
 {
@@ -46,6 +48,23 @@ namespace Price.Domain.Tests
 				.ConfigureAwait(false);
 		}
 
+		// protected async Task UpdateAsync<TSnapshotAggregate, TAggregateRoot, TIdentity>(
+		// 	TIdentity id, 
+		// 	Action<TSnapshotAggregate> action)
+		// 		where TSnapshotAggregate : ISnapshotAggregateRoot<TAggregateRoot, TIdentity>
+		// 		where TIdentity : IIdentity
+		// {
+		// 	await AggregateStore
+		// 		.UpdateAsync<TSnapshotAggregate, TIdentity>(
+		// 			id,
+		// 			SourceId.New,
+		// 			(a, c) => { 
+		// 				action(a);
+		// 				return Task.FromResult(0);
+		// 			},
+		// 			CancellationToken.None)
+		// 		.ConfigureAwait(false);
+		// }
 		public void Dispose()
 		{
 			Resolver?.Dispose();
