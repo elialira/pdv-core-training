@@ -1,0 +1,45 @@
+server:
+  port: 8080
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+
+security:
+  access:
+    api:
+      permissions-uri: ${RAC_PROTOCOL}://${RAC_HOST}:${RAC_PORT}/totvs.rac/api/permissions
+  oauth2:
+    resource:
+      id: 'authorization_api'
+      jwk:
+        key-set-uri: ${RAC_PROTOCOL}://${RAC_HOST}:${RAC_PORT}/totvs.rac/.well-known/openid-configuration/jwks
+
+axon:
+  serializer:
+    general: jackson
+  amqp:
+    exchange: product.events

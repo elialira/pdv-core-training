@@ -1,0 +1,33 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    generate-ddl: true
+    show-sql: true
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/productdb?currentSchema=product
+    username: productadmin
+    password: admin#3012
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+product:
+  service:
+      protocol: http
+      host: localhost
+      port: 8090
+
+amqp:
+  exchange: product.events
+  routing_key: br.com.totvs.raas.product.common.event

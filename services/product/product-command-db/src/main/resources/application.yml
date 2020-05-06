@@ -1,0 +1,10 @@
+## default connection pool
+spring:
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    driverClassName: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://localhost:5432/productdb?currentSchema=product
+    username: productadmin
+    password: admin#3012

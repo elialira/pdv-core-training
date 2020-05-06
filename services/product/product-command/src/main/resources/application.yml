@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  http:
+    log-request-details=true:
+  jackson:
+    default-property-inclusion: non_null
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    url: jdbc:postgresql://localhost:5432/productdb?currentSchema=product
+    username: productadmin
+    password: admin#3012
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+security:
+  access:
+    api:
+      permissions-uri: http://localhost:5000/totvs.rac/api/permissions
+  oauth2:
+    resource:
+      id: 'authorization_api'
+      jwk:
+        key-set-uri: http://localhost:5000/totvs.rac/.well-known/openid-configuration/jwks
+
+axon:
+  serializer:
+    general: jackson
+  amqp:
+    exchange: product.events
