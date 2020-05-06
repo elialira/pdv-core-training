@@ -13,8 +13,7 @@ namespace Price.Infra
     {
         public static IEventFlowOptions ConfigureEventStore(this IEventFlowOptions options)
         {
-            // TODO: read form config
-            string eventStoreUrl = "tcp://localhost:1113";
+            string eventStoreUrl = Environment.GetEnvironmentVariable("EVENTSTORECONNECTION");
             string connectionString = $"ConnectTo={eventStoreUrl}; HeartBeatTimeout=500";
             Uri eventStoreUri = GetUriFromConnectionString(connectionString);
 
