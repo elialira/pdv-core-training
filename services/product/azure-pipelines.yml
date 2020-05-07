@@ -3,7 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
+pr:
   batch: true
   branches:
     include:
@@ -16,22 +16,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - name: 'imageRepository'
-    value: 'product-command'
-  - name: 'containerRegistry'
-    value: 'totvs-raas-cr'
-  - name: 'projectPath'
-    value: '$(Build.SourcesDirectory)/services/product'
-  - name: 'dockerfilePath'
-    value: '$(projectPath)/Dockerfile'
-  - name: 'tag'
-    value: '$(Build.BuildId)'
+  imageRepository: 'product-command'
+  projectPath: '$(Build.SourcesDirectory)/services/product'
+  dockerfilePath: '$(projectPath)/Dockerfile'
 
   # Agent VM image name
-  - name: 'vmImageName'
-    value: 'ubuntu-latest'
-  - name: 'tag'
-    value: '$(Build.BuildId)'
+  vmImageName: 'ubuntu-latest'
+  tag: '$(Build.BuildId)'
 
 stages:
   - stage: Command_Build
@@ -74,7 +65,6 @@ stages:
               command: build
               dockerfile: $(dockerfilePath)
               repository: $(imageRepository)
-              containerRegistry: $(containerRegistry)
               arguments: --build-arg MODULE=command
               tags: $(tag)
   - stage: Command_Database_Build
@@ -91,7 +81,6 @@ stages:
             inputs:
               command: build
               dockerfile: $(dockerfilePath)
-              containerRegistry: $(containerRegistry)
               repository: $(imageRepository)-db
               arguments: --build-arg MODULE=command-db
               tags: $(tag)
