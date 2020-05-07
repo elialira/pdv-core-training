@@ -25,7 +25,7 @@ namespace Price.Application.Services
       _queryProcessor = queryProcessor;
     }
     
-    public async Task<PriceTableReadModel> Create(CancellationToken cancellationToken)
+    public async Task<PriceTableId> Create(CancellationToken cancellationToken)
     {
       var id = PriceTableId.New;      
       
@@ -37,10 +37,7 @@ namespace Price.Application.Services
           cancellationToken)
         .ConfigureAwait(false);
 
-      var readModel = await _queryProcessor.ProcessAsync(
-        new ReadModelByIdQuery<PriceTableReadModel>(id), cancellationToken);
-
-      return readModel;
+      return id;
     }
 
     public Task<PriceTableId> Remove(Guid id)

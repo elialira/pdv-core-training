@@ -9,7 +9,7 @@ namespace Price.Application.Interfaces
 {
 	public interface IPriceTableService
 	{
-		Task<PriceTableReadModel> Create(CancellationToken cancellationToken);
+		Task<PriceTableId> Create(CancellationToken cancellationToken);
 		Task<IEnumerable<PriceTableReadModel>> GetAll(CancellationToken cancellationToken);
 		Task<PriceTableReadModel> GetById(string id, CancellationToken cancellationToken);
 		Task<PriceTableId> Update(CancellationToken cancellationToken);
