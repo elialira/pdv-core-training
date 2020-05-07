@@ -12,18 +12,18 @@ using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Application.Services
 {
-  public class PriceTableService : IPriceTableService
-  {
-    private readonly ICommandBus _commandBus;
-    private readonly IQueryProcessor _queryProcessor;
-    
-    public PriceTableService(
-      ICommandBus commandBus, 
-      IQueryProcessor queryProcessor)
+    public class PriceTableService : IPriceTableService
     {
-      _commandBus = commandBus;
-      _queryProcessor = queryProcessor;
-    }
+        private readonly ICommandBus _commandBus;
+        private readonly IQueryProcessor _queryProcessor;
+
+        public PriceTableService(
+          ICommandBus commandBus,
+          IQueryProcessor queryProcessor)
+        {
+            _commandBus = commandBus;
+            _queryProcessor = queryProcessor;
+        }
 
         public async Task<PriceTableId> Create(CancellationToken cancellationToken, string name, List<ProductPrice> productPrices)
         {
@@ -31,7 +31,7 @@ namespace Price.Application.Services
 
             await _commandBus
               .PublishAsync(
-                new CreatePriceTableCommand(id, name, productPrices),
+                new CreatePriceTableCommand(id, name, productPrices, new ValidityPeriod()),
                 cancellationToken)
               .ConfigureAwait(false);
 
@@ -39,23 +39,23 @@ namespace Price.Application.Services
         }
 
         public Task<PriceTableId> Remove(Guid id)
-    {
-      throw new NotImplementedException();
-    }
+        {
+            throw new NotImplementedException();
+        }
 
-    public Task<PriceTableId> Update(CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
+        public Task<PriceTableId> Update(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
 
-    Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
+        Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
 
-    Task<PriceTableReadModel> IPriceTableService.GetById(Guid id, CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
+        Task<PriceTableReadModel> IPriceTableService.GetById(Guid id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
-  }
 }
