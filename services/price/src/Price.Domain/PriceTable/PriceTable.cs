@@ -51,14 +51,29 @@ namespace Price.Domain.PriceTable
       List<ProductPrice> productPrices,
       ValidityPeriod validityPeriod)
     {
-      if (!IsNew) throw DomainError.With("PriceTable is already created");
+      if (!IsNew) 
+        throw DomainError.With("PriceTable is already created");
+      if (!validityPeriod.isValid) 
+        throw DomainError.With("Invalid validity period");
+    
       Emit(new PriceTableCreatedEvent(name, productPrices, validityPeriod));
+            
       return ExecutionResult.Success();
     }
 
     public IExecutionResult AddProductPrice(ProductPrice productPrice)
     {
       Emit(new ProductPriceAddedEvent(productPrice));
+      return ExecutionResult.Success();
+    } 
+
+    public IExecutionResult SetValidityPeriod(ValidityPeriod validityPeriod)
+    {
+      if (!validityPeriod.isValid) 
+        throw DomainError.With("Invalid validity period");
+
+      Emit(new ValidityPeriodUpdatedEvent(validityPeriod));      
+      
       return ExecutionResult.Success();
     } 
   }

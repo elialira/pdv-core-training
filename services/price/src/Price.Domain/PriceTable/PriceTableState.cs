@@ -10,7 +10,8 @@ namespace Price.Domain.PriceTable
 {
   public class PriceTableState : AggregateState<PriceTable, PriceTableId, PriceTableState>,
       IApply<PriceTableCreatedEvent>,
-      IApply<ProductPriceAddedEvent>
+      IApply<ProductPriceAddedEvent>,
+      IApply<ValidityPeriodUpdatedEvent>
   {
     private string _name;
     public string Name { get => _name; }
@@ -52,6 +53,11 @@ namespace Price.Domain.PriceTable
     public void Apply(ProductPriceAddedEvent aggregateEvent)
     {
       _productPrices.Add(aggregateEvent.ProductPrice);
+    }
+
+    public void Apply(ValidityPeriodUpdatedEvent aggregateEvent)
+    {
+      _validityPeriod = aggregateEvent.ValidityPeriod;
     }
   }
 }

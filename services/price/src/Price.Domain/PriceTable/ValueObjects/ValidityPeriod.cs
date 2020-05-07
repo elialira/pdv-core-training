@@ -20,10 +20,13 @@ namespace Price.Domain.PriceTable.ValueObjects
 		public DateTime? StartDate { get; private set; }
 		public DateTime? EndDate { get; private set; }
 
-		public bool isOnValidityPeriod()
-		{
-			return (StartDate.HasValue && StartDate >= DateTime.Now) 
+		public bool HasValue => StartDate.HasValue;
+
+		public bool isValid => !this.HasValue 
+			|| (EndDate.HasValue && StartDate >= EndDate);
+		
+		public bool isOnActivatedPeriod 
+			=> (StartDate.HasValue && StartDate >= DateTime.Now) 
 				&& (!EndDate.HasValue || EndDate <= DateTime.Now);
-		}
 	}
 }

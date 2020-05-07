@@ -4,11 +4,11 @@ using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Domain.PriceTable.Events
 {
-  [EventVersion("ValidityPeriodAddEvent", 1)]
-  public class ValidityPeriodAddEvent
+  [EventVersion("ValidityPeriodUpdatedEvent", 1)]
+  public class ValidityPeriodUpdatedEvent
     : AggregateEvent<PriceTable, PriceTableId>
   {
-		public ValidityPeriodAddEvent(ValidityPeriod validityPeriod)
+		public ValidityPeriodUpdatedEvent(ValidityPeriod validityPeriod)
 			=> ValidityPeriod = validityPeriod;
       
     public ValidityPeriod ValidityPeriod { get; set; }
