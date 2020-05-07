@@ -7,6 +7,7 @@ using EventFlow.Queries;
 using Price.Application.Interfaces;
 using Price.Domain.PriceTable;
 using Price.Domain.PriceTable.Commands;
+using Price.Domain.PriceTable.ReadModels;
 using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Application.Services
@@ -39,22 +40,22 @@ namespace Price.Application.Services
       return id;
     }
 
-    public Task<IEnumerable<PriceTable>> GetAll(CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
-
-    public Task<PriceTable> GetById(Guid id, CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
-
     public Task<PriceTableId> Remove(Guid id)
     {
       throw new NotImplementedException();
     }
 
     public Task<PriceTableId> Update(CancellationToken cancellationToken)
+    {
+      throw new NotImplementedException();
+    }
+
+    Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
+    {
+      throw new NotImplementedException();
+    }
+
+    Task<PriceTableReadModel> IPriceTableService.GetById(Guid id, CancellationToken cancellationToken)
     {
       throw new NotImplementedException();
     }
