@@ -12,7 +12,7 @@ namespace Price.Application.Interfaces
 	{
 		Task<PriceTableId> Create(CancellationToken cancellationToken, string name, List<ProductPrice> productPrice);
 		Task<IEnumerable<PriceTableReadModel>> GetAll(CancellationToken cancellationToken);
-		Task<PriceTableReadModel> GetById(Guid id, CancellationToken cancellationToken);
+		Task<PriceTableReadModel> GetById(string id, CancellationToken cancellationToken);
 		Task<PriceTableId> Update(CancellationToken cancellationToken);
 		Task<PriceTableId> Remove(Guid id);
 	}

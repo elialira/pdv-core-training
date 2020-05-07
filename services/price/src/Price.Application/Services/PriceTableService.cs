@@ -48,12 +48,15 @@ namespace Price.Application.Services
             throw new NotImplementedException();
         }
 
-        Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
+        async Task<PriceTableReadModel> IPriceTableService.GetById(string id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var readModel = await _queryProcessor.ProcessAsync(
+              new ReadModelByIdQuery<PriceTableReadModel>(id), cancellationToken);
+
+            return readModel;
         }
 
-        Task<PriceTableReadModel> IPriceTableService.GetById(Guid id, CancellationToken cancellationToken)
+        Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
