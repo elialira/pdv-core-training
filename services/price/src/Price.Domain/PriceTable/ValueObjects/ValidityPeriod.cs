@@ -18,8 +18,8 @@ namespace Price.Domain.PriceTable.ValueObjects
 
 		public bool HasValue => StartDate.HasValue;
 
-		public bool isValid => !this.HasValue 
-			|| (EndDate.HasValue && StartDate >= EndDate);
+		public bool isValid => 
+			!this.HasValue || (EndDate.HasValue && StartDate >= EndDate);
 		
 		public bool isOnActivatedPeriod 
 			=> (StartDate.HasValue && StartDate >= DateTime.Now) 

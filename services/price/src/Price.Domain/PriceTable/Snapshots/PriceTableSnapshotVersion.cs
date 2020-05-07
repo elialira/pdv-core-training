@@ -1,6 +1,6 @@
 namespace Price.Domain.PriceTable.Snapshots
 {
-    public enum PriceTableSnapshotVersion
-    {
-    }
+  public enum PriceTableSnapshotVersion
+  {
+  }
 }
