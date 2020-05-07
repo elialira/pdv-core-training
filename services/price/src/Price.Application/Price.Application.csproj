@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Price.Domain\Price.Domain.csproj" />
+    <ProjectReference Include="..\Price.Infra\Price.Infra.csproj" />
   </ItemGroup>
 
 </Project>

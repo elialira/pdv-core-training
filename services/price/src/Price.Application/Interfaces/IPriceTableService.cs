@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Price.Domain.PriceTable;
 using Price.Domain.PriceTable.ValueObjects;
-using Price.Domain.PriceTable.ReadModels;
+using Price.Infra.ReadModels;
 
 namespace Price.Application.Interfaces
 {

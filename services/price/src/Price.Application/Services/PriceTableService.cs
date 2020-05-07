@@ -7,8 +7,9 @@ using EventFlow.Queries;
 using Price.Application.Interfaces;
 using Price.Domain.PriceTable;
 using Price.Domain.PriceTable.Commands;
-using Price.Domain.PriceTable.ReadModels;
+using Price.Domain.PriceTable.Queries;
 using Price.Domain.PriceTable.ValueObjects;
+using Price.Infra.ReadModels;
 
 namespace Price.Application.Services
 {
@@ -56,9 +57,12 @@ namespace Price.Application.Services
             return readModel;
         }
 
-        Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
+        async Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var readModel = await _queryProcessor.ProcessAsync(
+              new GetPriceTableQuery(), cancellationToken);
+
+            return (IEnumerable<PriceTableReadModel>) readModel;
         }
     }
 }
