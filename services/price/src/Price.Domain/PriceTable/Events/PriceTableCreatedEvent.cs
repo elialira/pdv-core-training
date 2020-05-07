@@ -6,7 +6,7 @@ using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Domain.PriceTable.Events
 {
-  [EventVersion("PriceTableRegisteredEvent", 1)]
+  [EventVersion("PriceTableCreatedEvent", 1)]
   public class PriceTableCreatedEvent 
     : AggregateEvent<PriceTable, PriceTableId>
   {
