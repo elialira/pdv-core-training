@@ -1,10 +1,10 @@
 using System;
 
-namespace Price.Api.Model
+namespace Price.Application.ViewModels
 {
     public class ProductPriceViewModel
     {
         public string ProductId { get; set; }
-        public decimal Price { get; set; } 
+        public decimal Price { get; set; }
     }
 }

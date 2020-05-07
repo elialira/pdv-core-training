@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Price.Api.Model;
+using Price.Application.ViewModels;
 using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Api.AutoMapperProfile

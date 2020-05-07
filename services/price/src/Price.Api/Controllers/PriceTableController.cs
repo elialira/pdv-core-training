@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Price.Api.Model;
 using Price.Application.Interfaces;
+using Price.Application.ViewModels;
 using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Api.Controllers
