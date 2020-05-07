@@ -3,7 +3,7 @@ using EventFlow;
 using EventFlow.RabbitMQ;
 using EventFlow.RabbitMQ.Extensions;
 
-namespace Price.Infra
+namespace Price.Infra.Extensions
 {
     public static class RabbitMqExtension
     {      
