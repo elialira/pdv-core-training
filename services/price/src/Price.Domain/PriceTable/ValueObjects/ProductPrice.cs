@@ -11,7 +11,7 @@ namespace Price.Domain.PriceTable.ValueObjects
       this.Price = price;
     }
     
-    public string ProductId { get; set; }
-    public decimal Price { get; set; }
+    public string ProductId { get; private set; }
+    public decimal Price { get; private set; }
   }
 }

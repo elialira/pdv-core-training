@@ -7,7 +7,7 @@ using EventFlow.MetadataProviders;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
 
-namespace Price.Infra
+namespace Price.Infra.Extensions
 {
     public static class EventStoreExtension
     {

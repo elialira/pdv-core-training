@@ -13,7 +13,9 @@ namespace Price.Domain.PriceTable.Commands
       CreatePriceTableCommand command,
       CancellationToken cancellationToken)
     {      
-      var executionResult = aggregate.Create(command.Name, command.ProductPrices);
+      var executionResult = aggregate
+        .Create(command.Name, command.ProductPrices, command.ValidityPeriod);
+      
       return Task.FromResult(executionResult);
     }
   }

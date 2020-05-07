@@ -3,6 +3,7 @@ using System.Reflection;
 using EventFlow;
 using EventFlow.Configuration;
 using EventFlow.Extensions;
+using Price.Infra.Extensions;
 
 namespace Price.Infra
 {
@@ -15,7 +16,8 @@ namespace Price.Infra
         eventFlowOptions
             .AddDefaults(Assembly)
             .ConfigureEventStore()
-            .ConfigureRabbitMqExtension();
+            .ConfigureRabbitMqExtension()
+            .ConfigureInMemoryReadModel();
     }
   }
 }
