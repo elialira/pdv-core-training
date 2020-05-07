@@ -1,9 +1,6 @@
 version: '3.6'
 services:
   price-service:
-    build:
-      context: .
-      dockerfile: src/Price.Api/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - RABBITMQCONNECTION=amqp://test:test@rabbitmq:5672
