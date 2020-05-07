@@ -22,7 +22,9 @@ namespace Price.Application.Services
       
       await _commandBus
         .PublishAsync(
-          new CreatePriceTableCommand(id, "Tabela 1", new List<ProductPrice>()), 
+          new CreatePriceTableCommand(
+            id, "Tabela 1", new List<ProductPrice>(), new ValidityPeriod()
+          ), 
           cancellationToken)
         .ConfigureAwait(false);
 

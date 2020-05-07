@@ -9,12 +9,18 @@ namespace Price.Domain.PriceTable.Commands
   {
     public string Name { get; }
     public List<ProductPrice> ProductPrices { get; set; }
+    public ValidityPeriod ValidityPeriod { get; set; }
+
     public CreatePriceTableCommand(
-      PriceTableId aggregateId, string name, List<ProductPrice> productPrices) 
-      : base(aggregateId)
+      PriceTableId aggregateId, 
+      string name, 
+      List<ProductPrice> productPrices,
+      ValidityPeriod validityPeriod) 
+        : base(aggregateId)
     {
         Name = name;
         ProductPrices = productPrices;
+        ValidityPeriod = validityPeriod;
     }
   }
 }

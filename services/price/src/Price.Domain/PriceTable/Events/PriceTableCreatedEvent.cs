@@ -10,13 +10,18 @@ namespace Price.Domain.PriceTable.Events
   public class PriceTableCreatedEvent 
     : AggregateEvent<PriceTable, PriceTableId>
   {
-    public PriceTableCreatedEvent(string name, List<ProductPrice> productPrices) 
+    public PriceTableCreatedEvent(
+      string name, 
+      List<ProductPrice> productPrices,
+      ValidityPeriod validityPeriod) 
     {
       Name = name;
       ProductPrices = productPrices;
+      ValidityPeriod = validityPeriod;      
     }
                 
     public string Name { get; set; }
     public List<ProductPrice> ProductPrices { get; set; }
+    public ValidityPeriod ValidityPeriod { get; set; }
   }
 }

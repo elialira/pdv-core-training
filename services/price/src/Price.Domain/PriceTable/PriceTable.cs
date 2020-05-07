@@ -30,6 +30,7 @@ namespace Price.Domain.PriceTable
         new PriceTableSnapshot(
           _state.Name,
           _state.ProductPrices.ToList(),
+          _state.ValidityPeriod,        
           Enumerable.Empty<PriceTableSnapshotVersion>())
       );
     }
@@ -45,10 +46,13 @@ namespace Price.Domain.PriceTable
     }     
     #endregion  
 
-    public IExecutionResult Create(string name, List<ProductPrice> productPrices)
+    public IExecutionResult Create(
+      string name, 
+      List<ProductPrice> productPrices,
+      ValidityPeriod validityPeriod)
     {
       if (!IsNew) throw DomainError.With("PriceTable is already created");
-      Emit(new PriceTableCreatedEvent(name, productPrices));
+      Emit(new PriceTableCreatedEvent(name, productPrices, validityPeriod));
       return ExecutionResult.Success();
     }
 

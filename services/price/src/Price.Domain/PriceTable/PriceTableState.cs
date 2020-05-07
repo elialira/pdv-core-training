@@ -14,29 +14,39 @@ namespace Price.Domain.PriceTable
   {
     private string _name;
     public string Name { get => _name; }
+    
+    private ValidityPeriod _validityPeriod;
+    public ValidityPeriod ValidityPeriod { get => _validityPeriod; }
 
     private List<ProductPrice> _productPrices;
-    public IReadOnlyList<ProductPrice> ProductPrices => _productPrices.AsReadOnly();
-
+    public IReadOnlyList<ProductPrice> ProductPrices 
+      => _productPrices.AsReadOnly();
+    
+    private IEnumerable<PriceTableSnapshotVersion> _snapshotVersions = 
+      new PriceTableSnapshotVersion[] { };
     public IReadOnlyCollection<PriceTableSnapshotVersion> SnapshotVersions 
-      { get; private set; } = new PriceTableSnapshotVersion[] { };
+      => _snapshotVersions.ToList().AsReadOnly();
 
     public PriceTableState() 
     {
       _name = String.Empty;
       _productPrices = new List<ProductPrice>();      
+      _validityPeriod = new ValidityPeriod();
     }
 
     public void LoadSnapshot(PriceTableSnapshot snapshot)
     {
         _name = snapshot.Name;
         _productPrices = snapshot.ProductPrices.ToList();
-        SnapshotVersions = snapshot.PreviousVersions;
+        _validityPeriod = snapshot.ValidityPeriod;
+        _snapshotVersions = snapshot.PreviousVersions;
     }
 
     public void Apply(PriceTableCreatedEvent aggregateEvent)
     {
       _name = aggregateEvent.Name;
+      _productPrices = aggregateEvent.ProductPrices;
+      _validityPeriod = aggregateEvent.ValidityPeriod;
     }
 
     public void Apply(ProductPriceAddedEvent aggregateEvent)
