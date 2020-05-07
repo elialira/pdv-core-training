@@ -1,4 +1,4 @@
-ARG BUILD_IMAGE=totvsraascr.azurecr.io/maven:3.6.3-jdk-11-openj9
+ARG BUILD_IMAGE=maven:3.6.3-jdk-11-openj9
 ARG RUNTIME_IMAGE=adoptopenjdk:11-jre-openj9
 
 #####################################################
