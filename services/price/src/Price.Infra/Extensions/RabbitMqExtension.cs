@@ -7,9 +7,12 @@ namespace Price.Infra.Extensions
 {
     public static class RabbitMqExtension
     {      
-      public static EventFlow.IEventFlowOptions ConfigureRabbitMqExtension(this IEventFlowOptions options)
+      public static EventFlow.IEventFlowOptions ConfigureRabbitMqExtension(
+        this IEventFlowOptions options)
       {        
-        string rabbitMqUrl = Environment.GetEnvironmentVariable("RABBITMQCONNECTION");        
+        string rabbitMqUrl = Environment
+          .GetEnvironmentVariable("RABBITMQCONNECTION");        
+        
         IEventFlowOptions eventFlowOptions = options
           .PublishToRabbitMq(
             RabbitMqConfiguration.With(
