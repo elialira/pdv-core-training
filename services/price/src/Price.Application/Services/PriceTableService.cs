@@ -12,55 +12,53 @@ using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Application.Services
 {
-  public class PriceTableService : IPriceTableService
-  {
-    private readonly ICommandBus _commandBus;
-    private readonly IQueryProcessor _queryProcessor;
-    
-    public PriceTableService(
-      ICommandBus commandBus, 
-      IQueryProcessor queryProcessor)
+    public class PriceTableService : IPriceTableService
     {
-      _commandBus = commandBus;
-      _queryProcessor = queryProcessor;
-    }
-    
-    public async Task<PriceTableId> Create(CancellationToken cancellationToken)
-    {
-      var id = PriceTableId.New;      
-      
-      await _commandBus
-        .PublishAsync(
-          new CreatePriceTableCommand(
-            id, "Tabela 1", new List<ProductPrice>(), new ValidityPeriod()
-          ), 
-          cancellationToken)
-        .ConfigureAwait(false);
+        private readonly ICommandBus _commandBus;
+        private readonly IQueryProcessor _queryProcessor;
 
-      return id;
-    }
+        public PriceTableService(
+          ICommandBus commandBus,
+          IQueryProcessor queryProcessor)
+        {
+            _commandBus = commandBus;
+            _queryProcessor = queryProcessor;
+        }
 
-    public Task<PriceTableId> Remove(Guid id)
-    {
-      throw new NotImplementedException();
-    }
+        public async Task<PriceTableId> Create(CancellationToken cancellationToken, string name, List<ProductPrice> productPrices)
+        {
+            var id = PriceTableId.New;
 
-    public Task<PriceTableId> Update(CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
+            await _commandBus
+              .PublishAsync(
+                new CreatePriceTableCommand(id, name, productPrices, new ValidityPeriod()),
+                cancellationToken)
+              .ConfigureAwait(false);
 
-    async Task<PriceTableReadModel> IPriceTableService.GetById(string id, CancellationToken cancellationToken)
-    {
-      var readModel = await _queryProcessor.ProcessAsync(
-        new ReadModelByIdQuery<PriceTableReadModel>(id), cancellationToken);
+            return id;
+        }
 
-      return readModel;
-    }
+        public Task<PriceTableId> Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
 
-    Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
+        public Task<PriceTableId> Update(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        async Task<PriceTableReadModel> IPriceTableService.GetById(string id, CancellationToken cancellationToken)
+        {
+            var readModel = await _queryProcessor.ProcessAsync(
+              new ReadModelByIdQuery<PriceTableReadModel>(id), cancellationToken);
+
+            return readModel;
+        }
+
+        Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
-  }
 }
