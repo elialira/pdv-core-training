@@ -24,16 +24,14 @@ namespace Price.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePriceTable(CancellationToken cancellationToken, [FromBody]PriceTableViewModel viewModel) =>
-            new JsonResult(await _priceTableService.Create(cancellationToken, viewModel.Name, _mapper.Map<List<ProductPrice>>(viewModel.ProductPrices)));
+        public async Task<IActionResult> CreatePriceTable([FromBody]PriceTableViewModel viewModel,
+                                                           CancellationToken cancellationToken)
+            => new JsonResult(await _priceTableService.Create(viewModel.Name,
+                                    _mapper.Map<List<ProductPrice>>(viewModel.ProductPrices),
+                                     cancellationToken));
 
-    
- 
-
-
-		[HttpGet("{id}")]
-		public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
-			=> new JsonResult(await _priceTableService.GetById(id, cancellationToken));
-
-  }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
+            => new JsonResult(await _priceTableService.GetById(id, cancellationToken));
+    }
 }
