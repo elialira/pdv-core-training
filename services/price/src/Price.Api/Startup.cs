@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
-
+using Price.Application.AutoMapperProfile;
 
 namespace Price.Api
 {
@@ -28,7 +28,7 @@ namespace Price.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(ModelDomainProfile));
             services.AddControllers();
             services.AddCors();            
             AppBootstrap.AddServices(services, Configuration);

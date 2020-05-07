@@ -2,7 +2,7 @@
 using Price.Application.ViewModels;
 using Price.Domain.PriceTable.ValueObjects;
 
-namespace Price.Api.AutoMapperProfile
+namespace Price.Application.AutoMapperProfile
 {
     public class ModelDomainProfile : Profile
     {

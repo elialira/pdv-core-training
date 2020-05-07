@@ -26,7 +26,9 @@ namespace Price.Application.Services
             _queryProcessor = queryProcessor;
         }
 
-        public async Task<PriceTableId> Create(CancellationToken cancellationToken, string name, List<ProductPrice> productPrices)
+        public async Task<PriceTableId> Create(string name, 
+                                               List<ProductPrice> productPrices, 
+                                               CancellationToken cancellationToken)
         {
             var id = PriceTableId.New;
 
