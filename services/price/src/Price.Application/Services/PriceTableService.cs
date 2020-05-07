@@ -25,7 +25,7 @@ namespace Price.Application.Services
       _queryProcessor = queryProcessor;
     }
     
-    public async Task<PriceTableId> Create(CancellationToken cancellationToken)
+    public async Task<PriceTableReadModel> Create(CancellationToken cancellationToken)
     {
       var id = PriceTableId.New;      
       
@@ -36,8 +36,11 @@ namespace Price.Application.Services
           ), 
           cancellationToken)
         .ConfigureAwait(false);
-      
-      return id;
+
+      var readModel = await _queryProcessor.ProcessAsync(
+        new ReadModelByIdQuery<PriceTableReadModel>(id), cancellationToken);
+
+      return readModel;
     }
 
     public Task<PriceTableId> Remove(Guid id)
@@ -50,12 +53,15 @@ namespace Price.Application.Services
       throw new NotImplementedException();
     }
 
-    Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
+    async Task<PriceTableReadModel> IPriceTableService.GetById(string id, CancellationToken cancellationToken)
     {
-      throw new NotImplementedException();
+      var readModel = await _queryProcessor.ProcessAsync(
+        new ReadModelByIdQuery<PriceTableReadModel>(id), cancellationToken);
+
+      return readModel;
     }
 
-    Task<PriceTableReadModel> IPriceTableService.GetById(Guid id, CancellationToken cancellationToken)
+    Task<IEnumerable<PriceTableReadModel>> IPriceTableService.GetAll(CancellationToken cancellationToken)
     {
       throw new NotImplementedException();
     }

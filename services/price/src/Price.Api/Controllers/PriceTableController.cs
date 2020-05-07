@@ -17,5 +17,11 @@ namespace Price.Api.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CreatePriceTable(CancellationToken cancellationToken)
 			=> new JsonResult(await _priceTableService.Create(cancellationToken));
+
+
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
+			=> new JsonResult(await _priceTableService.GetById(id, cancellationToken));
+
   }
 }

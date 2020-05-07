@@ -10,6 +10,7 @@ namespace Price.Domain.PriceTable.ReadModels
     IAmReadModelFor<PriceTable, PriceTableId, PriceTableCreatedEvent>,
     IAmReadModelFor<PriceTable, PriceTableId, ValidityPeriodUpdatedEvent>
   {
+    public PriceTableId Id { get; set; }
     public string Name { get; set; }
     public List<ProductPrice> ProductPrices { get; set; }
     public ValidityPeriod ValidityPeriod { get; set; }
@@ -20,7 +21,8 @@ namespace Price.Domain.PriceTable.ReadModels
     {
       var aggEvent = domainEvent.AggregateEvent;
 			
-			Name = aggEvent.Name;
+			Id = domainEvent.AggregateIdentity;
+      Name = aggEvent.Name;
 			ProductPrices = aggEvent.ProductPrices;
 			ValidityPeriod = aggEvent.ValidityPeriod;
     }
