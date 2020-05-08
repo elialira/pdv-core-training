@@ -13,11 +13,11 @@ namespace Price.Infra
 
     public void Register(IEventFlowOptions eventFlowOptions)
     {
-        eventFlowOptions
-            .AddDefaults(Assembly)
-            .ConfigureEventStore()
-            .ConfigureRabbitMqExtension()
-            .ConfigureInMemoryReadModel();
+      eventFlowOptions
+        .AddDefaults(Assembly)
+        .ConfigureEventStore()
+        .ConfigureRabbitMqExtension()
+        .ConfigureInMemoryReadModel();
     }
   }
 }

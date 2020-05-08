@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using EventFlow.Aggregates;
 using EventFlow.ReadStores;
+using Price.Domain.PriceTable;
 using Price.Domain.PriceTable.Events;
 using Price.Domain.PriceTable.ValueObjects;
 
-namespace Price.Domain.PriceTable.ReadModels
+namespace Price.Infra.ReadModels
 {
-  public class PriceTableReadModel : IReadModel,
+  public class PriceTableReadModel : 
+    IReadModel, 
     IAmReadModelFor<PriceTable, PriceTableId, PriceTableCreatedEvent>,
     IAmReadModelFor<PriceTable, PriceTableId, ValidityPeriodUpdatedEvent>
   {

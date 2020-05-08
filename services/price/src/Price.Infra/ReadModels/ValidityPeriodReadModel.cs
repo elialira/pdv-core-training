@@ -1,13 +1,15 @@
 using System;
 using EventFlow.Aggregates;
 using EventFlow.ReadStores;
+using Price.Domain.PriceTable;
 using Price.Domain.PriceTable.Events;
 
-namespace Price.Domain.PriceTable.ReadModels
+namespace Price.Infra.ReadModels
 {
-  public class ValidityPeriodReadModel : IReadModel,
-      IAmReadModelFor<PriceTable, PriceTableId, PriceTableCreatedEvent>,
-      IAmReadModelFor<PriceTable, PriceTableId, ValidityPeriodUpdatedEvent>
+  public class ValidityPeriodReadModel : 
+    IReadModel,
+    IAmReadModelFor<PriceTable, PriceTableId, PriceTableCreatedEvent>,
+    IAmReadModelFor<PriceTable, PriceTableId, ValidityPeriodUpdatedEvent>
   {
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }

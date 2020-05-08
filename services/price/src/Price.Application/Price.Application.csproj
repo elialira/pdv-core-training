@@ -1,15 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="EventFlow" Version="0.77.4077" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Price.Domain\Price.Domain.csproj" />
+    <ProjectReference Include="..\Price.Infra\Price.Infra.csproj" />
   </ItemGroup>
 
 </Project>

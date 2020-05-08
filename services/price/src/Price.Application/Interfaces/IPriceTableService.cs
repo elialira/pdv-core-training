@@ -2,18 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Price.Domain.PriceTable;
-using Price.Domain.PriceTable.ValueObjects;
-using Price.Domain.PriceTable.ReadModels;
+using Price.Application.ViewModels;
 
 namespace Price.Application.Interfaces
 {
 	public interface IPriceTableService
 	{
-		Task<PriceTableId> Create(CancellationToken cancellationToken, string name, List<ProductPrice> productPrice);
-		Task<IEnumerable<PriceTableReadModel>> GetAll(CancellationToken cancellationToken);
-		Task<PriceTableReadModel> GetById(string id, CancellationToken cancellationToken);
-		Task<PriceTableId> Update(CancellationToken cancellationToken);
-		Task<PriceTableId> Remove(Guid id);
+		Task<PriceTableIdViewModel> Create(PriceTableViewModel viewModel, CancellationToken cancellationToken);
+		Task<IEnumerable<PriceTableViewModel>> GetAll(CancellationToken cancellationToken);
+		Task<PriceTableViewModel> GetById(string id, CancellationToken cancellationToken);
+		Task<PriceTableViewModel> Update(CancellationToken cancellationToken);
+		Task<PriceTableIdViewModel> Remove(Guid id);
 	}
 }

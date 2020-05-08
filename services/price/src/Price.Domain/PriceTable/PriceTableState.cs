@@ -8,10 +8,11 @@ using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Domain.PriceTable
 {
-  public class PriceTableState : AggregateState<PriceTable, PriceTableId, PriceTableState>,
-      IApply<PriceTableCreatedEvent>,
-      IApply<ProductPriceAddedEvent>,
-      IApply<ValidityPeriodUpdatedEvent>
+  public class PriceTableState : 
+    AggregateState<PriceTable, PriceTableId, PriceTableState>,
+    IApply<PriceTableCreatedEvent>,
+    IApply<ProductPriceAddedEvent>,
+    IApply<ValidityPeriodUpdatedEvent>
   {
     private string _name;
     public string Name { get => _name; }
@@ -37,10 +38,10 @@ namespace Price.Domain.PriceTable
 
     public void LoadSnapshot(PriceTableSnapshot snapshot)
     {
-        _name = snapshot.Name;
-        _productPrices = snapshot.ProductPrices.ToList();
-        _validityPeriod = snapshot.ValidityPeriod;
-        _snapshotVersions = snapshot.PreviousVersions;
+      _name = snapshot.Name;
+      _productPrices = snapshot.ProductPrices.ToList();
+      _validityPeriod = snapshot.ValidityPeriod;
+      _snapshotVersions = snapshot.PreviousVersions;
     }
 
     public void Apply(PriceTableCreatedEvent aggregateEvent)
