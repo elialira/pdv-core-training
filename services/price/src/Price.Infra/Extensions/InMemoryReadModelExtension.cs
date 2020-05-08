@@ -1,4 +1,3 @@
-using System;
 using EventFlow;
 using EventFlow.Extensions;
 using Price.Infra.ReadModels;
@@ -13,7 +12,7 @@ namespace Price.Infra.Extensions
         IEventFlowOptions eventFlowOptions = options
            .UseInMemoryReadStoreFor<PriceTableReadModel>()
            .UseInMemoryReadStoreFor<ValidityPeriodReadModel>();
-
+        
         return eventFlowOptions;
       }
     }

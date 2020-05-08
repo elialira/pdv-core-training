@@ -8,7 +8,7 @@ using Price.Domain.PriceTable.ValueObjects;
 namespace Price.Infra.ReadModels
 {
   public class PriceTableReadModel : 
-    IReadModel,
+    IReadModel, 
     IAmReadModelFor<PriceTable, PriceTableId, PriceTableCreatedEvent>,
     IAmReadModelFor<PriceTable, PriceTableId, ValidityPeriodUpdatedEvent>
   {

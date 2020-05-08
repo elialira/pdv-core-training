@@ -7,7 +7,7 @@ namespace Price.Domain.PriceTable.ValueObjects
 	{
 		public ValidityPeriod() { }
 
-		public ValidityPeriod(DateTime startDate, DateTime? endDate)
+		public ValidityPeriod(DateTime? startDate, DateTime? endDate)
 		{
 			StartDate = startDate;
 			EndDate = endDate;

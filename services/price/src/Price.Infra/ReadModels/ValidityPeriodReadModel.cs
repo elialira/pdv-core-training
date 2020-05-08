@@ -6,9 +6,10 @@ using Price.Domain.PriceTable.Events;
 
 namespace Price.Infra.ReadModels
 {
-  public class ValidityPeriodReadModel : IReadModel,
-      IAmReadModelFor<PriceTable, PriceTableId, PriceTableCreatedEvent>,
-      IAmReadModelFor<PriceTable, PriceTableId, ValidityPeriodUpdatedEvent>
+  public class ValidityPeriodReadModel : 
+    IReadModel,
+    IAmReadModelFor<PriceTable, PriceTableId, PriceTableCreatedEvent>,
+    IAmReadModelFor<PriceTable, PriceTableId, ValidityPeriodUpdatedEvent>
   {
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
