@@ -3,11 +3,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EventFlow.Aggregates.ExecutionResults;
-using EventFlow.Exceptions;
+using EventFlow.Extensions;
 using EventFlow.Snapshots;
 using EventFlow.Snapshots.Strategies;
 using Price.Domain.PriceTable.Events;
 using Price.Domain.PriceTable.Snapshots;
+using Price.Domain.PriceTable.Specifications;
 using Price.Domain.PriceTable.ValueObjects;
 
 namespace Price.Domain.PriceTable
@@ -15,7 +16,8 @@ namespace Price.Domain.PriceTable
   public class PriceTable : SnapshotAggregateRoot<PriceTable, PriceTableId, PriceTableSnapshot>
   {
     private readonly PriceTableState _state = new PriceTableState();
-
+    public ValidityPeriod ValidityPeriod => _state.ValidityPeriod;
+    
     public PriceTable(PriceTableId priceTableId)
       : base(priceTableId, SnapshotEveryFewVersionsStrategy.With(SnapshotEveryVersion))
       => Register(_state);
@@ -51,10 +53,8 @@ namespace Price.Domain.PriceTable
       List<ProductPrice> productPrices,
       ValidityPeriod validityPeriod)
     {
-      if (!IsNew) 
-        throw DomainError.With("PriceTable is already created");
-      if (!validityPeriod.isValid) 
-        throw DomainError.With("Invalid validity period");
+      PriceTableSpecifications.IsNew.ThrowDomainErrorIfNotSatisfied(this);
+      ValidityPeriodSpecifications.IsValid.ThrowDomainErrorIfNotSatisfied(validityPeriod);
     
       Emit(new PriceTableCreatedEvent(name, productPrices, validityPeriod));
             
@@ -63,14 +63,18 @@ namespace Price.Domain.PriceTable
 
     public IExecutionResult AddProductPrice(ProductPrice productPrice)
     {
+      PriceTableSpecifications.IsCreated.ThrowDomainErrorIfNotSatisfied(this);
+
       Emit(new ProductPriceAddedEvent(productPrice));
+      
       return ExecutionResult.Success();
     } 
 
     public IExecutionResult SetValidityPeriod(ValidityPeriod validityPeriod)
-    {
-      if (!validityPeriod.isValid) 
-        throw DomainError.With("Invalid validity period");
+    {      
+      PriceTableSpecifications.IsCreated
+        .And(PriceTableSpecifications.HasValidPeriod)
+        .ThrowDomainErrorIfNotSatisfied(this);
 
       Emit(new ValidityPeriodUpdatedEvent(validityPeriod));      
       

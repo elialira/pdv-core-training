@@ -30,11 +30,7 @@ namespace Price.Domain.PriceTable
       => _snapshotVersions.ToList().AsReadOnly();
 
     public PriceTableState() 
-    {
-      _name = String.Empty;
-      _productPrices = new List<ProductPrice>();      
-      _validityPeriod = new ValidityPeriod();
-    }
+      => _productPrices = new List<ProductPrice>();      
 
     public void LoadSnapshot(PriceTableSnapshot snapshot)
     {
