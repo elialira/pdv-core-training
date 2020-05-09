@@ -45,19 +45,19 @@ services:
     networks: 
       - price-service-network
             
-  readstore:
-    image: postgres:10.6-alpine
-    environment:
-      - POSTGRES_DB=testdb
-      - POSTGRES_USER=dbadmin
-      - POSTGRES_PASSWORD=dbadmin
-    command:
-      - -c
-      - max_prepared_transactions=100
-    networks: 
-      - price-service-network  
-    ports:
-      - "5433:5432"
+  # readstore:
+  #   image: postgres:10.6-alpine
+  #   environment:
+  #     - POSTGRES_DB=testdb
+  #     - POSTGRES_USER=dbadmin
+  #     - POSTGRES_PASSWORD=dbadmin
+  #   command:
+  #     - -c
+  #     - max_prepared_transactions=100
+  #   networks: 
+  #     - price-service-network  
+  #   ports:
+  #     - "5433:5432"
 
 networks:
   price-service-network:
