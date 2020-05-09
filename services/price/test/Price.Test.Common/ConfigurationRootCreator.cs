@@ -10,7 +10,7 @@ namespace Price.Test.Common
       services.AddOptions();
 
       var confBuilder = new ConfigurationBuilder();
-      confBuilder.AddJsonFile("unittest.json", optional: false);
+   // confBuilder.AddJsonFile("unittest.json", optional: false);
 
       var configuration = confBuilder.Build();
       services.AddSingleton((IConfiguration) configuration);
