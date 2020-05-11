@@ -3,15 +3,16 @@ services:
   price-service:
     build:
       context: .
-      dockerfile: src/Price.Api/Dockerfile
+      dockerfile: Dockerfile
+      args: 
+        SKIPTESTS: "false"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - RABBITMQCONNECTION=amqp://test:test@rabbitmq:5672
-      - EVENTSTORECONNECTION=tcp://eventstore:1113
+      - EVENTSTORECONNECTION=tcp://eventstore:1113      
     depends_on:
       - rabbitmq
       - eventstore
-      - readstore
     networks: 
       - price-service-network
     ports:
@@ -43,21 +44,7 @@ services:
       - EVENTSTORE_RUN_PROJECTIONS=all
       - EVENTSTORE_START_STANDARD_PROJECTIONS=TRUE
     networks: 
-      - price-service-network
-            
-  # readstore:
-  #   image: postgres:10.6-alpine
-  #   environment:
-  #     - POSTGRES_DB=testdb
-  #     - POSTGRES_USER=dbadmin
-  #     - POSTGRES_PASSWORD=dbadmin
-  #   command:
-  #     - -c
-  #     - max_prepared_transactions=100
-  #   networks: 
-  #     - price-service-network  
-  #   ports:
-  #     - "5433:5432"
+      - price-service-network          
 
 networks:
   price-service-network:

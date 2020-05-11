@@ -16,13 +16,19 @@ RUN dotnet restore "Price.Api/Price.Api.csproj"
 #####################################################
 
 WORKDIR "/src/Price.Api"
-RUN dotnet build "Price.Api.csproj" -c Docker -o /app/build
+RUN dotnet build "Price.Api.csproj" -c Docker -o /app/build 
 
 #####################################################
 ###  Stage(Optional): Run Unit Tests              ###
 #####################################################
 
-## TODO:
+FROM build AS test
+ARG SKIPTESTS=true
+WORKDIR /test
+COPY /test .
+RUN if [ "$SKIPTESTS" = "false" ]; \ 
+    then ls **/*Tests.csproj | xargs -L1 dotnet test --logger:trx --collect:"XPlat Code Coverage" /p:CollectCoverage=true; \
+    fi
 
 #####################################################
 ###  Stage: publish                               ###
