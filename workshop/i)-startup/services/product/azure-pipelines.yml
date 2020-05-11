@@ -1,0 +1,86 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pr:
+  batch: true
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - services/product
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  imageRepository: 'product-command'
+  projectPath: '$(Build.SourcesDirectory)/services/product'
+  dockerfilePath: '$(projectPath)/Dockerfile'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+  tag: '$(Build.BuildId)'
+
+stages:
+  - stage: Command_Build
+    displayName: Command
+    jobs:
+      - job: Command_Build
+        displayName: Command Build
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build
+            inputs:
+              command: build
+              dockerfile: $(dockerfilePath)
+              arguments: --build-arg MODULE=command
+                --target build
+          - script: |
+              docker image build -f $(dockerfilePath) --build-arg MODULE=command --build-arg SKIPTESTS=false --target test -t $(imageRepository)-unit-test:$(tag) $(projectPath)
+              docker container run --name $(imageRepository)-unit-test -d $(imageRepository)-unit-test:$(tag)
+              docker cp $(imageRepository)-unit-test:app/ $(Agent.TempDirectory)
+              docker container stop $(imageRepository)-unit-test
+              docker container rm $(imageRepository)-unit-test
+            displayName: Run Unit Test
+          - task: PublishTestResults@2
+            displayName: Publish Unit Test
+            inputs:
+              testRunner: JUnit
+              testResultsFiles: '**/TEST-*.xml'
+              searchFolder: '$(Agent.TempDirectory)'
+              failTaskOnFailedTests: true
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish Code Coverage
+            inputs:
+              summaryFileLocation: $(Agent.TempDirectory)/**/target/site/jacoco/jacoco.xml
+              reportDirectory: $(Agent.TempDirectory)/**/target/site/jacoco/
+          - task: Docker@2
+            displayName: Package
+            inputs:
+              command: build
+              dockerfile: $(dockerfilePath)
+              repository: $(imageRepository)
+              arguments: --build-arg MODULE=command
+              tags: $(tag)
+  - stage: Command_Database_Build
+    displayName: Command Database
+    dependsOn: Command_Build
+    jobs:
+      - job: Command_Database_Build
+        displayName: Command Database Build
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build
+            inputs:
+              command: build
+              dockerfile: $(dockerfilePath)
+              repository: $(imageRepository)-db
+              arguments: --build-arg MODULE=command-db
+              tags: $(tag)

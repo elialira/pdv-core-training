@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.8.RELEASE</version>
+		<relativePath/>
+	</parent>
+	
+	<groupId>br.com</groupId>
+	<artifactId>product-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0</version>
+
+	<properties>
+		<java.version>11</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
+		<tjf.version>1.17.0-RELEASE</tjf.version>
+		<postgresql.vesion>42.2.9</postgresql.vesion>
+
+		<hibernate-validator.version>6.0.17.Final</hibernate-validator.version>
+		<axon.version>4.1.2</axon.version>
+		<axon-amqp.version>4.1</axon-amqp.version>
+		<dozer.version>6.5.0</dozer.version>
+		<lombok.version>1.18.4</lombok.version>
+		<spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+		<swagger.version>2.9.2</swagger.version>
+
+		<liquibase-core.version>3.8.5</liquibase-core.version>
+		<HikariCP.version>3.2.0</HikariCP.version>
+		<!-- Test -->
+		<testcontainers.version>1.12.5</testcontainers.version>
+		<cucumber.version>5.0.0</cucumber.version>
+		<mockito.version>2.24.0</mockito.version>
+		<junit-jupiter.version>5.3.2</junit-jupiter.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${junit-jupiter.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<!-- Test -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+				<optional>true</optional>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>all</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>product-common</module>
+				<module>product-command</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>command</id>
+			<modules>
+				<module>product-common</module>
+				<module>product-command</module>
+			</modules>
+		</profile>
+	</profiles>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.2</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<!-- attached to Maven test phase -->
+						<execution>
+							<id>report</id>
+							<phase>test</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

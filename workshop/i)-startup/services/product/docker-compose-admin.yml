@@ -1,0 +1,19 @@
+version: '3'
+services:
+  pgadmin4:
+    image: dpage/pgadmin4
+    ports:
+      - "8088:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=SuperSecret
+    volumes:
+      - maven-repo:/root/.m2
+    networks:
+      - product-network
+
+networks:
+  product-network:
+
+volumes:
+    maven-repo:
