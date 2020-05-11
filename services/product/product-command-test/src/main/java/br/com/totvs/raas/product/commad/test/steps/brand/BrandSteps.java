@@ -3,7 +3,7 @@ package br.com.totvs.raas.product.commad.test.steps.brand;
 import br.com.totvs.raas.core.test.context.Result;
 import br.com.totvs.raas.core.test.steps.IdentifierContext;
 import br.com.totvs.raas.core.test.steps.ResultContext;
-import br.com.totvs.raas.product.commad.test.port.adapter.persistence.BrandRepository;
+import br.com.totvs.raas.product.commad.test.port.adapter.persistence.BrandEventRepository;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -26,7 +26,7 @@ public class BrandSteps {
     private BrandAdapter brandAdapter;
 
     @Autowired
-    private BrandRepository brandRepository;
+    private BrandEventRepository brandEventRepository;
 
     @Autowired
     private BrandContext brandContext;
@@ -36,7 +36,7 @@ public class BrandSteps {
 
     @Given("I have a {status} Brand with {value} name")
     public void givenIHaveABrandWith(Boolean status, String name) {
-        String id = brandRepository.save(name, status);
+        String id = brandEventRepository.save(name, status);
 
         identifierContext.set(id);
     }
@@ -68,7 +68,7 @@ public class BrandSteps {
 
     @Then("I should have a brand created with {status} status and {value} name")
     public void thenIShouldHaveABrandCreatedWith(Boolean status, String name) {
-        Map<String, Object> brand = brandRepository.findCreatedBy(identifierContext.get());
+        Map<String, Object> brand = brandEventRepository.findCreatedBy(identifierContext.get());
 
         assertThat(brand, allOf(hasEntry("name", (Object) name),
                                 hasEntry("activated", (Object) status)));
@@ -76,7 +76,7 @@ public class BrandSteps {
 
     @Then("I should have a brand changed with {status} status and {value} name")
     public void thenIShouldHaveAnAlteredBrandWith(Boolean status, String name) {
-        Map<String, Object> brand = brandRepository.findChangedBy(identifierContext.get());
+        Map<String, Object> brand = brandEventRepository.findChangedBy(identifierContext.get());
 
         assertThat(brand, allOf(hasEntry("name", (Object) name),
                                 hasEntry("activated", (Object) status)));

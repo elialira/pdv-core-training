@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>product-parent</artifactId>
-        <groupId>br.com.totvs.raas</groupId>
+        <groupId>br.com</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -18,17 +18,17 @@
     <dependencies>
         <dependency>
             <artifactId>raas-cucumber</artifactId>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-hamcrest</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-core-test</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -100,7 +100,7 @@
         </dependency>
 
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-containers</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>

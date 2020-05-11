@@ -1,6 +1,7 @@
 package br.com.totvs.raas.product.commad.test.steps;
 
 import br.com.totvs.raas.core.test.context.Cleaned;
+import br.com.totvs.raas.product.commad.test.port.adapter.persistence.BrandRepository;
 import br.com.totvs.raas.product.commad.test.port.adapter.persistence.event.EventStore;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -11,6 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Scenario {
+
+    @Autowired
+    private BrandRepository brandRepository;
 
     @Autowired
     private EventStore eventStoreRepository;
@@ -37,12 +41,14 @@ public class Scenario {
 
     @Before
     public void setUp() {
+        brandRepository.deleteAll();
         eventStoreRepository.deleteAll();
         cleaneds.clear();
     }
 
     @After
     public void teawDown() {
+        brandRepository.deleteAll();
         eventStoreRepository.deleteAll();
         cleaneds.clear();
     }

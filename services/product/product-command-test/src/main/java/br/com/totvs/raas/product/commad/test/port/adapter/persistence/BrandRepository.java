@@ -1,40 +1,30 @@
 package br.com.totvs.raas.product.commad.test.port.adapter.persistence;
 
-import br.com.totvs.raas.product.commad.test.ProductCommandTestConstants.*;
-import br.com.totvs.raas.product.commad.test.port.adapter.persistence.event.EventStore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Repository
 public class BrandRepository {
 
-    @Autowired
-    private EventStore eventStore;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public String save(String name, Boolean status) {
-        Map<String, Object> brand = createBrand(name, status);
-        return eventStore.save(BrandConstants.TYPE, BrandConstants.CREATED, brand);
+    @Transactional
+    public void deleteAll() {
+        entityManager.createNativeQuery(BrandSQL.DELETE)
+                .executeUpdate();
     }
 
-    public Map<String, Object> findCreatedBy(String aggregateId) {
-        return eventStore.findBy(aggregateId, BrandConstants.CREATED);
-    }
-
-    public Map<String, Object> findChangedBy(String aggregateId) {
-        return eventStore.findBy(aggregateId, BrandConstants.CHANGED);
-    }
-
-    private Map<String, Object> createBrand(String name, Boolean activated) {
-        Map<String, Object> brand = new HashMap<>();
-        brand.put("id",  UUID.randomUUID().toString());
-        brand.put("name", name);
-        brand.put("activated", activated);
-        brand.put("tenantId", TenantConstants.ID);
-        return brand;
+    @Transactional
+    public void save(String id, String name, String tenantId) {
+        entityManager.createNativeQuery(BrandSQL.INSERT)
+                .setParameter(BrandSQL.PARAM_ID, id)
+                .setParameter(BrandSQL.PARAM_NAME, name)
+                .setParameter(BrandSQL.PARAM_TENANTID, tenantId)
+                .executeUpdate();
     }
 
 }

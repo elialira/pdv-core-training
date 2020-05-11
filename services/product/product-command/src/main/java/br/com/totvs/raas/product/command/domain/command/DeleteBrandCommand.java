@@ -1,6 +1,5 @@
 package br.com.totvs.raas.product.command.domain.command;
 
-import br.com.totvs.raas.product.command.domain.model.brand.BrandId;
 import br.com.totvs.raas.product.command.domain.model.tenant.Tenant;
 import lombok.EqualsAndHashCode;
 import lombok.Generated;
@@ -17,7 +16,7 @@ import static java.util.Objects.nonNull;
 public class DeleteBrandCommand {
 
     @TargetAggregateIdentifier
-    private BrandId id;
+    private String id;
     private Tenant tenant;
 
     public String getTenantId() {

@@ -62,3 +62,8 @@ alter table if exists domain_event_entry
 
 alter table if exists snapshot_event_entry
     add constraint UK_e1uucjseo68gopmnd0vgdl44h unique (event_identifier);
+
+CREATE TABLE brand (id varchar(255) not null,
+                    name varchar(255),
+                    tenantid varchar(255),
+                    CONSTRAINT brand_pk PRIMARY KEY (id));
