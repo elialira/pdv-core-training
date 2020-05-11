@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args: 
+        SKIPTESTS: "false"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - RABBITMQCONNECTION=amqp://test:test@rabbitmq:5672
