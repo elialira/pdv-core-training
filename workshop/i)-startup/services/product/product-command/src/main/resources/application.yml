@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  http:
+    log-request-details=true:
+  jackson:
+    default-property-inclusion: non_null
+
+axon:
+  serializer:
+    general: jackson
+  amqp:
+    exchange: product.events

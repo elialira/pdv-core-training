@@ -1,0 +1,10 @@
+.gitignore
+
+Dockerfile
+./**/Dockerfile
+
+target/
+**/target/
+
+./*.iml
+./**/*.iml

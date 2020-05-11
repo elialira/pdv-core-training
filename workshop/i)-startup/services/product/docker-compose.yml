@@ -1,0 +1,39 @@
+version: '3'
+services:
+  db:
+    image: postgres:10
+    environment:
+      - POSTGRES_DB=productdb
+      - POSTGRES_USER=productsys
+      - POSTGRES_PASSWORD=sys#1050
+    ports:
+      - "5432:5432"
+    networks:
+      - product-network
+  core:
+    build:
+      context: .
+      args:
+        - MODULE=command
+    ports:
+      - "8080:8080"
+    volumes:
+      - maven-repo:/root/.m2
+    networks:
+      - product-network
+    depends_on:
+      - rabbitmq
+      - db
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - product-network
+
+networks:
+  product-network:
+
+volumes:
+    maven-repo:
