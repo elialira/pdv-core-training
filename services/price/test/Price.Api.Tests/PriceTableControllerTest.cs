@@ -18,10 +18,10 @@ namespace Price.Api.tests
 
     public PriceTableControllerTest()
     {
-      Environment.SetEnvironmentVariable("RABBITMQCONNECTION", "amqp://test:test@rabbitmq:5672");
-      Environment.SetEnvironmentVariable("EVENTSTORECONNECTION", "tcp://eventstore:1113");
-      //-ASPNETCORE_ENVIRONMENT = Docker
-
+      Environment.SetEnvironmentVariable("RABBITMQCONNECTION", "amqp://test:test@localhost:5672");
+      Environment.SetEnvironmentVariable("EVENTSTORE_MEM_DB", "true");
+      Environment.SetEnvironmentVariable("EVENTSTORECONNECTION", "tcp://localhost:1113");
+  
       server = new TestServer(new WebHostBuilder()
               .UseStartup<Startup>());
 
