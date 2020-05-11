@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>product-parent</artifactId>
-        <groupId>br.com.totvs.raas</groupId>
+        <groupId>br.com</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -22,17 +22,17 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-web</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>product-common</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -103,7 +103,7 @@
         </dependency>
 
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-containers</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>

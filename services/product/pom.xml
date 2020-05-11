@@ -10,7 +10,7 @@
 		<relativePath/>
 	</parent>
 	
-	<groupId>br.com.totvs.raas</groupId>
+	<groupId>br.com</groupId>
 	<artifactId>product-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0.0</version>
@@ -44,11 +44,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>com.totvs.tjf</groupId>
-				<artifactId>tjf-security-web</artifactId>
-				<version>${tjf.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter-engine</artifactId>

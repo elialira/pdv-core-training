@@ -20,9 +20,16 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import static java.util.Objects.nonNull;
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
+@Entity
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -36,10 +43,12 @@ public class Brand {
         String TENANT_NOT_EMPTY = "brand.tenant.not_empty";
     }
 
+    @Id
     @AggregateIdentifier
+    private String id;
+    private String name;
     @JsonUnwrapped
-    private BrandId id;
-    @JsonUnwrapped
+    @Embedded
     private Tenant tenant;
 
     @CommandHandler
@@ -47,7 +56,7 @@ public class Brand {
         validate(command);
 
         apply(BrandCreatedEvent.builder()
-                .id(command.getId().getId())
+                .id(command.getId())
                 .name(command.getName())
                 .activated(command.getActivated())
                 .tenantId(command.getTenantId())
@@ -59,7 +68,7 @@ public class Brand {
         validate(command);
 
         apply(BrandChangedEvent.builder()
-                .id(command.getId().getId())
+                .id(command.getId())
                 .name(command.getName())
                 .activated(command.getActivated())
                 .tenantId(command.getTenantId())
@@ -69,7 +78,7 @@ public class Brand {
 
     private void validate(BrandCommand command) {
         ValidatorBuilder.builder()
-                .hasLength(Constants.ID_NOT_EMPTY, command.getId().getId())
+                .hasLength(Constants.ID_NOT_EMPTY, command.getId())
                 .hasLength(Constants.NAME_NOT_EMPTY, command.getName())
                 .notNull(Constants.ACTIVATED_NOT_NULL, command.getActivated())
                 .hasLength(Constants.TENANT_NOT_EMPTY, command.getTenantId())
@@ -80,21 +89,22 @@ public class Brand {
     @CommandHandler
     public void handle(DeleteBrandCommand command) {
         ValidatorBuilder.builder()
-                .hasLength(Constants.ID_NOT_EMPTY, command.getId().getId())
+                .hasLength(Constants.ID_NOT_EMPTY, command.getId())
                 .hasLength(Constants.TENANT_NOT_EMPTY, command.getTenantId())
                 .build()
                 .validate(BrandViolationException::new);
 
         apply(BrandDeletedEvent.builder()
-                .id(command.getId().getId())
+                .id(command.getId())
                 .tenantId(command.getTenant().getId())
                 .build());
     }
 
     @EventSourcingHandler
     public void on(BrandEvent event) {
-        this.id = new BrandId(event.getId());
-        this.tenant = new Tenant(event.getId());
+        this.id = event.getId();
+        this.name = event.getName();
+        this.tenant = new Tenant(event.getTenantId());
     }
 
     @EventSourcingHandler

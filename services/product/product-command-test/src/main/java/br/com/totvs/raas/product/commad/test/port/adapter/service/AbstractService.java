@@ -23,9 +23,6 @@ public abstract class AbstractService {
     @Value("${product.service.protocol}://${product.service.host}:${product.service.port}/")
     private String productUrl;
 
-    @Value("${rac.service.protocol}://${rac.service.host}:${rac.service.port}/totvs.rac/connect/token")
-    private String racUrl;
-
     private String resource;
 
     @Autowired

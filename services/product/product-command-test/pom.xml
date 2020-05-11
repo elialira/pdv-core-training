@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>br.com.totvs.raas</groupId>
+        <groupId>br.com</groupId>
         <artifactId>product-parent</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -19,25 +19,25 @@
     <dependencies>
 
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-core-test</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
+            <groupId>br.com</groupId>
             <artifactId>raas-cucumber</artifactId>
-            <groupId>br.com.totvs.raas</groupId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-hamcrest</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>br.com.totvs.raas</groupId>
+            <groupId>br.com</groupId>
             <artifactId>raas-containers</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
@@ -57,6 +57,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -82,16 +92,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-spring-boot-starter</artifactId>
         </dependency>
 
     </dependencies>

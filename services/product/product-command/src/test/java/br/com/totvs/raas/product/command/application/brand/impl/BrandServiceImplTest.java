@@ -3,12 +3,15 @@ package br.com.totvs.raas.product.command.application.brand.impl;
 import br.com.totvs.raas.product.command.AbstractTest;
 import br.com.totvs.raas.product.command.ProductCommandConstants.BrandConstants;
 import br.com.totvs.raas.product.command.ProductCommandConstants.TenantConstants;
+import br.com.totvs.raas.product.command.application.brand.shared.AggregateBuilder;
 import br.com.totvs.raas.product.command.domain.command.ChangeBrandCommand;
 import br.com.totvs.raas.product.command.domain.command.CreateBrandCommand;
 import br.com.totvs.raas.product.command.domain.command.DeleteBrandCommand;
 import br.com.totvs.raas.product.command.domain.model.Identity;
-import br.com.totvs.raas.product.command.domain.model.brand.BrandId;
+import br.com.totvs.raas.product.command.domain.model.brand.Brand;
+import br.com.totvs.raas.product.command.domain.model.brand.UniqueBrandNameException;
 import br.com.totvs.raas.product.command.domain.model.tenant.Tenant;
+import br.com.totvs.raas.product.command.port.adapter.persistence.BrandRepository;
 import br.com.totvs.raas.product.common.data.BrandDTO;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.command.AggregateNotFoundException;
@@ -34,6 +37,9 @@ import static org.mockito.Mockito.when;
 public class BrandServiceImplTest extends AbstractTest {
 
     @Mock
+    private BrandRepository brandRepositoryMock;
+
+    @Mock
     private CommandGateway commandGatewayMock;
 
     @Mock
@@ -48,12 +54,13 @@ public class BrandServiceImplTest extends AbstractTest {
         @BeforeEach
         void context() {
             when(identityMock.next()).thenReturn(BrandConstants.ID);
-            when(commandGatewayMock.send(any()))
-                    .thenReturn(CompletableFuture.completedFuture(BrandConstants.ID));
         }
 
         @Test
         public void shouldGenereteidentity() {
+            when(commandGatewayMock.send(any()))
+                    .thenReturn(CompletableFuture.completedFuture(BrandConstants.ID));
+
             BrandDTO brand = BrandDTO.builder()
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.IS_ACTIVATED)
@@ -65,7 +72,29 @@ public class BrandServiceImplTest extends AbstractTest {
         }
 
         @Test
+        public void shouldThrowUniqueBrandNameException() {
+            when(brandRepositoryMock.findByNameAndTenant(any(), any()))
+                    .thenReturn(createBrand(BrandConstants.NAME_IS_SONY));
+
+            BrandDTO brand = BrandDTO.builder()
+                    .name(BrandConstants.NAME_IS_SONY)
+                    .activated(BrandConstants.IS_ACTIVATED)
+                    .build();
+
+            try {
+                brandService.create(TenantConstants.ID, brand);
+                fail();
+            } catch (UniqueBrandNameException cause) {
+                String expected = "BusinessException(code=exception.unique_product_name, arguments=[Sony])";
+                assertEquals(expected, cause.toString());
+            }
+        }
+
+        @Test
         public void shouldCreate() {
+            when(commandGatewayMock.send(any()))
+                    .thenReturn(CompletableFuture.completedFuture(BrandConstants.ID));
+
             BrandDTO brand = BrandDTO.builder()
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.IS_ACTIVATED)
@@ -73,11 +102,10 @@ public class BrandServiceImplTest extends AbstractTest {
 
             brandService.create(TenantConstants.ID, brand);
 
-            BrandId brandId = new BrandId(BrandConstants.ID);
             Tenant tenant = new Tenant(TenantConstants.ID);
 
             CreateBrandCommand expected = CreateBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.IS_ACTIVATED)
                     .tenant(tenant)
@@ -88,6 +116,9 @@ public class BrandServiceImplTest extends AbstractTest {
 
         @Test
         public void shouldReturnABrand() {
+            when(commandGatewayMock.send(any()))
+                    .thenReturn(CompletableFuture.completedFuture(BrandConstants.ID));
+
             BrandDTO brand = BrandDTO.builder()
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.IS_ACTIVATED)
@@ -106,6 +137,13 @@ public class BrandServiceImplTest extends AbstractTest {
                     .map(CompletableFuture::join)
                     .map(BrandDTO::toString)
                     .orElse(null);
+        }
+
+        private Optional<Brand> createBrand(String name) {
+            Brand brand = AggregateBuilder.builder(Brand.class)
+                    .setField("name", name)
+                    .build();
+            return Optional.ofNullable(brand);
         }
 
     }
@@ -128,11 +166,10 @@ public class BrandServiceImplTest extends AbstractTest {
 
             brandService.change(TenantConstants.ID, BrandConstants.ID,  brand);
 
-            BrandId brandId = new BrandId(BrandConstants.ID);
             Tenant tenant = new Tenant(TenantConstants.ID);
 
             ChangeBrandCommand expected = ChangeBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.IS_ACTIVATED)
                     .tenant(tenant)
@@ -181,16 +218,14 @@ public class BrandServiceImplTest extends AbstractTest {
                     .thenReturn(CompletableFuture.completedFuture(null));
         }
 
-
         @Test
         public void shouldSuccessfullyDelete() {
             brandService.delete(TenantConstants.ID, BrandConstants.ID);
 
-            BrandId brandId = new BrandId(BrandConstants.ID);
             Tenant tenant = new Tenant(TenantConstants.ID);
 
             DeleteBrandCommand expected = DeleteBrandCommand.builder()
-                                                            .id(brandId)
+                                                            .id(BrandConstants.ID)
                                                             .tenant(tenant)
                                                             .build();
 

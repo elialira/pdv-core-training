@@ -32,11 +32,10 @@ public class BrandTest extends AbstractTest {
 
         @Test
         public void givenIdIsNull_thenShouldThrowViolationException() {
-            BrandId brandId = new BrandId(BrandConstants.ID_IS_NULL);
             Tenant tenant = new Tenant(TenantConstants.ID);
 
             CreateBrandCommand command = CreateBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID_IS_NULL)
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.IS_ACTIVATED)
                     .tenant(tenant)
@@ -52,11 +51,10 @@ public class BrandTest extends AbstractTest {
 
         @Test
         public void givenNameIsNull_thenShouldThrowViolationException() {
-            BrandId brandId = new BrandId(BrandConstants.ID);
             Tenant tenant = new Tenant(TenantConstants.ID);
 
             CreateBrandCommand command = CreateBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_NULL)
                     .activated(BrandConstants.IS_ACTIVATED)
                     .tenant(tenant)
@@ -72,11 +70,10 @@ public class BrandTest extends AbstractTest {
 
         @Test
         public void givenStatusIsNull_thenShouldThrowViolationException() {
-            BrandId brandId = new BrandId(BrandConstants.ID);
             Tenant tenant = new Tenant(TenantConstants.ID);
 
             CreateBrandCommand command = CreateBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.STATUS_IS_NULL)
                     .tenant(tenant)
@@ -92,10 +89,8 @@ public class BrandTest extends AbstractTest {
 
         @Test
         public void givenTenantIsNull_thenShouldThrowViolationException() {
-            BrandId brandId = new BrandId(BrandConstants.ID);
-
             CreateBrandCommand command = CreateBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.IS_ACTIVATED)
                     .tenant(TENANT_IS_NULL)
@@ -111,11 +106,10 @@ public class BrandTest extends AbstractTest {
 
         @Test
         public void shouldSaveSuccessfully() {
-            BrandId brandId = new BrandId(BrandConstants.ID);
             Tenant tenant = new Tenant(TenantConstants.ID);
 
             CreateBrandCommand command = CreateBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_SONY)
                     .activated(BrandConstants.IS_ACTIVATED)
                     .tenant(tenant)
@@ -147,11 +141,10 @@ public class BrandTest extends AbstractTest {
                     .tenantId(TenantConstants.ID)
                     .build();
 
-            BrandId brandId = new BrandId(BrandConstants.ID);
             Tenant tenant = new Tenant(TenantConstants.ID);
 
             ChangeBrandCommand command = ChangeBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_NULL)
                     .activated(BrandConstants.IS_DISABLED)
                     .tenant(tenant)
@@ -175,10 +168,9 @@ public class BrandTest extends AbstractTest {
                     .build();
 
             Tenant tenant = new Tenant(TenantConstants.ID);
-            BrandId brandId = new BrandId(BrandConstants.ID);
 
             ChangeBrandCommand command = ChangeBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_LG)
                     .activated(BrandConstants.STATUS_IS_NULL)
                     .tenant(tenant)
@@ -201,10 +193,8 @@ public class BrandTest extends AbstractTest {
                     .tenantId(TenantConstants.ID)
                     .build();
 
-            BrandId brandId = new BrandId(BrandConstants.ID);
-
             ChangeBrandCommand command = ChangeBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_LG)
                     .activated(BrandConstants.IS_ACTIVATED)
                     .tenant(TENANT_IS_NULL)
@@ -229,10 +219,8 @@ public class BrandTest extends AbstractTest {
                     .tenantId(TenantConstants.ID)
                     .build();
 
-            BrandId brandId = new BrandId(BrandConstants.ID);
-
             ChangeBrandCommand command = ChangeBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .name(BrandConstants.NAME_IS_LG)
                     .activated(BrandConstants.IS_DISABLED)
                     .tenant(tenant)
@@ -264,10 +252,8 @@ public class BrandTest extends AbstractTest {
                     .tenantId(TenantConstants.ID)
                     .build();
 
-            BrandId brandId = new BrandId(BrandConstants.ID);
-
             DeleteBrandCommand command = DeleteBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .tenant(TENANT_IS_NULL)
                     .build();
 
@@ -290,10 +276,8 @@ public class BrandTest extends AbstractTest {
                     .tenantId(TenantConstants.ID)
                     .build();
 
-            BrandId brandId = new BrandId(BrandConstants.ID);
-
             DeleteBrandCommand command = DeleteBrandCommand.builder()
-                    .id(brandId)
+                    .id(BrandConstants.ID)
                     .tenant(tenant)
                     .build();
 

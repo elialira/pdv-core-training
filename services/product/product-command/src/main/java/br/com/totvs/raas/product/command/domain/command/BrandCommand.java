@@ -1,6 +1,5 @@
 package br.com.totvs.raas.product.command.domain.command;
 
-import br.com.totvs.raas.product.command.domain.model.brand.BrandId;
 import br.com.totvs.raas.product.command.domain.model.tenant.Tenant;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -13,7 +12,7 @@ import static java.util.Objects.nonNull;
 public abstract class BrandCommand  {
 
     @TargetAggregateIdentifier
-    private BrandId id;
+    private String id;
     private String name;
     private Boolean activated;
     private Tenant tenant;
